@@ -22,7 +22,7 @@ let playing=false,t=0,last=0,muted=false;
 const fmt=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
 function syncAudio(){if(muted||!playing){au.pause();return;}au.currentTime=t;au.play().catch(()=>{});}
 function loop(now){if(playing){t+=(now-last)/1000;if(t>=DUR){t=0;syncAudio();}}last=now;
-  if(window.renderFrame)window.renderFrame(t);sk.value=t;tt.textContent=fmt(t);requestAnimationFrame(loop);}
+  try{if(window.renderFrame)window.renderFrame(t);window.__b2bOK=window.__b2bOK||t>1;}catch(e){window.__b2bFail&&window.__b2bFail('渲染出错');return;}sk.value=t;tt.textContent=fmt(t);requestAnimationFrame(loop);}
 const sk=ui.querySelector('#sk'),tt=ui.querySelector('#tt'),pp=ui.querySelector('#pp'),mu=ui.querySelector('#mu');
 function setPlay(v){playing=v;pp.textContent=v?'❚❚':'▶';syncAudio();}
 pp.onclick=()=>setPlay(!playing);

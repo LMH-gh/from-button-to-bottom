@@ -78,6 +78,27 @@
 <div id="tap"></div>
 <div id="fade" class="layer"></div>
 </div>
+<script>
+// 兜底：浏览器无法运行 WebGL 或初始化出错时，改播录制好的视频
+(function(){
+  if(new URLSearchParams(location.search).has('render'))return;
+  var done=false;
+  function fallback(why){
+    if(done||window.__b2bOK)return;done=true;
+    var b=document.body;b.innerHTML='';
+    b.style.cssText='margin:0;width:100%;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#050506;color:#9a9aa0;font:13px sans-serif';
+    var v=document.createElement('video');v.src='media/from-button-to-bottom.mp4';v.controls=true;v.playsInline=true;v.poster='media/poster.jpg';
+    v.style.cssText='max-height:calc(100vh - 50px);max-width:100vw;border-radius:14px';b.appendChild(v);
+    var n=document.createElement('div');n.textContent='当前浏览器无法运行实时 3D（'+why+'），正在播放录制版。';b.appendChild(n);
+    window.__b2bFallback=why;
+  }
+  window.__b2bFail=fallback;
+  try{var c=document.createElement('canvas');if(!(c.getContext('webgl2')||c.getContext('webgl')))fallback('不支持 WebGL');}catch(e){fallback('不支持 WebGL');}
+  window.addEventListener('error',function(e){if(!window.ready)fallback('初始化出错');});
+  window.addEventListener('unhandledrejection',function(){if(!window.ready)fallback('初始化出错');});
+  setTimeout(function(){if(!window.ready)fallback('加载超时');},15000);
+})();
+</script>
 <script type="module" src="src/main.js"></script>
 <script type="module">if(!new URLSearchParams(location.search).has('render'))import('./src/player.js');</script>
 </body></html>
