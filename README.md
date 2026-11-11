@@ -8,6 +8,8 @@ From Button to Bottom 指的是从按下按钮，一直到坐下。这是一段 
 
 ▶ 演示视频：`media/from-button-to-bottom.mp4`（9:16，约 87 秒，全部实时 3D 渲染，无实拍素材）
 
+**在线演示**：https://lmh-gh.github.io/from-button-to-bottom/ （桌面浏览器效果最好）
+
 ## 为什么做这个
 
 市面上已经有影院选座的 3D 视角，也有高铁选座、球场选座、地图路线动画，但每一个都只管一段。爱做攻略的人真正想看的是**整趟**：酒店走到影院要多久，哪一排看得最舒服；第二天地铁到高铁站留多少缓冲，哪个窗位不被窗间墙挡；下车后怎么上山，几点能登顶。
@@ -31,7 +33,8 @@ From Button to Bottom 指的是从按下按钮，一直到坐下。这是一段 
 ```bash
 # 在仓库根目录
 python3 -m http.server 8766
-# 浏览器打开 http://localhost:8766/index.html，在控制台执行 renderFrame(t)，t 为秒
+# 浏览器打开 http://localhost:8766/index.html 即可播放（点击开始，带背景音乐，可拖动进度）
+# 加 ?render=1 关闭播放器，在控制台执行 renderFrame(t)，t 为秒
 ```
 
 逐帧渲染成视频（需要 Chromium 与 Python Playwright）：

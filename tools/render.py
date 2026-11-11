@@ -6,7 +6,7 @@ import os;os.makedirs(f'{d}/frames',exist_ok=True)
 with sync_playwright() as p:
     b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'])
     pg=b.new_page(viewport={'width':390,'height':844},device_scale_factor=2)
-    pg.goto(f'http://localhost:{os.environ.get("PORT","8766")}/{d}/index.html');pg.wait_for_function('window.ready===true',timeout=60000);pg.evaluate('document.fonts.ready')
+    pg.goto(f'http://localhost:{os.environ.get("PORT","8766")}/{d}/index.html?render=1');pg.wait_for_function('window.ready===true',timeout=60000);pg.evaluate('document.fonts.ready')
     for i in range(a,bnd):
         if os.path.exists(f'{d}/frames/f{i:04d}.jpg'): continue
         pg.evaluate(f'renderFrame({i/FPS})')
